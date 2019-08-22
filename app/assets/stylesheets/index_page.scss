@@ -1,0 +1,17 @@
+@import "variables";
+
+.btn:hover, .btn:focus, .btn.focus{
+	color: white;
+}
+
+a.ask-question-link {
+  color: #999
+}
+
+.feed-item {
+  border: 1px solid #EEE;
+  border-radius: 4px;
+  background-color: $bg;
+  margin: 8px;
+  padding: 16px;
+}

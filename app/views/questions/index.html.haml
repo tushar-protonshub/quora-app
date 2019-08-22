@@ -1,0 +1,32 @@
+= content_for :style do
+  = stylesheet_link_tag 'index_page', 'data-turbolinks-track': 'reload'
+
+.col-md-10
+  .feed-item
+    - if params[:topic_id].is_a?(String)
+      - topic = Topic.find(params[:topic_id])
+      .media
+        .media-left.media-middle
+          %a{:href => "#"}
+            = image_tag "http://lorempixel.com/256/256/", width: 96, height: 96
+        .media-body.media-middle
+          %h4.media-heading= topic.name
+      %p= topic.description
+      %div
+        = render "topics/follow_button", topic: topic
+    - else
+      %div{style: "font-size: 20px;color: #B92B27;"}= current_user.full_name
+      %h4
+        %a.ask-question-link{data: {"test-id": "questions-index-ask-question-link", toggle: "modal", target: "#new-question-modal"}}
+          Please put you question here?
+  - @questions.each do |question|
+    .feed-item
+      = render "questions/item", question: question
+  = paginate @questions
+.col-md-2
+  %h4 My Feeds
+  %hr
+  .list-group
+    = link_to "Followed Topics", questions_url(topic_id: current_user.topics.pluck(:id)), class: "list-group-item"
+    - current_user.topics.each do |topic|
+      = link_to topic.name, questions_url(topic_id: topic.id), class: "list-group-item"
